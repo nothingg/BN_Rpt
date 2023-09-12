@@ -1,0 +1,14 @@
+-- public.excel_no definition
+
+-- Drop table
+
+-- DROP TABLE public.excel_no;
+
+CREATE TABLE public.excel_no (
+	row_no int4 NULL,
+	transfer_ref_no varchar NULL,
+	transfer_date_buddist varchar NULL,
+	to_bank varchar NULL,
+	amt float4 NULL,
+	department varchar NULL
+);

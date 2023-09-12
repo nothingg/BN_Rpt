@@ -1,0 +1,29 @@
+-- public.reports definition
+
+-- Drop table
+
+-- DROP TABLE public.reports;
+
+CREATE TABLE public.reports (
+	cs_ref int8 NULL,
+	instruction_id text NULL,
+	mt text NULL,
+	ctgypurp text NULL,
+	dr_bic text NULL,
+	dr_acct text NULL,
+	cr_bic text NULL,
+	cr_acct text NULL,
+	dr_amt float8 NULL,
+	cr_amt float8 NULL,
+	status text NULL,
+	error text NULL,
+	"time" text NULL,
+	ch text NULL,
+	transmission_type text NULL,
+	debtor_acct text NULL,
+	debtor_name text NULL,
+	creditor_acct text NULL,
+	creditor_name text NULL,
+	transactions_time text NULL,
+	report_date timestamp NULL
+);
