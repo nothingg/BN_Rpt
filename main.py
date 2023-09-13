@@ -17,8 +17,7 @@ class CSVToPostgreSQL:
         'creditor_acct', 'creditor_name'
     ]
     self.excel_column_names = [
-        'row_no', 'transfer_ref_no', 'transfer_date_buddist', 'to_bank', 'amt',
-        'department'
+        'row_no', 'instruction_id', 'list_date_buddist', 'to_bank', 'amt','department'
     ]
 
   def readexcel(self):
@@ -30,13 +29,13 @@ class CSVToPostgreSQL:
                          #skiprows=900,
                          #nrows=3600,
                          usecols='A:F',
-                         dtype={'transfer_ref_no': str },
+                         dtype={'instruction_id': str },
                          names=self.excel_column_names)
 
     #1022 - row 1024
     data = data.dropna(subset=['department'])
-    data['transfer_ref_no'] = data['transfer_ref_no'].str.replace(" ","",regex=True)
-    data['transfer_date_christian'] = data['transfer_date_buddist'].apply(self.convert_buddhist_to_gregorian)
+    data['instruction_id'] = data['instruction_id'].str.replace(" ","",regex=True)
+    data['list_date'] = data['list_date_buddist'].apply(self.convert_buddhist_to_gregorian)
 
     return data
 
@@ -57,7 +56,7 @@ class CSVToPostgreSQL:
   def insert_data_excel(self, data):
     engine = create_engine(self.db_params)
 
-    data.to_sql('bahtnet_no', engine, if_exists='replace', index=False)
+    data.to_sql('excel_no', engine, if_exists='replace', index=False)
 
   def read_csv_files(self):
     combined_data = pd.DataFrame(columns=self.column_names)
@@ -104,7 +103,7 @@ class CSVToPostgreSQL:
                                                   errors='coerce')
 
     # Drop the intermediate 'date_string' column if you don't need it
-    combined_data = combined_data.drop(columns=['date_string'])
+    combined_data = combined_data.drop(columns=['date_string','transactions_time'])
 
     return combined_data
 
@@ -126,12 +125,7 @@ if __name__ == "__main__":
   # csv_to_postgresql.insert_into_postgresql(combined_data)
 
   excel_data = csv_to_postgresql.readexcel()
-
-
-
-  print(excel_data)
-  # print(f"{excel_data['transfer_date_christian']} -- {excel_data['transfer_date_buddist']}" )
-  # csv_to_postgresql.insert_data_excel(excel_data)
+  csv_to_postgresql.insert_data_excel(excel_data)
 
   # file_path = 'output.xlsx'
   # combined_data.to_excel(file_path, index=False)

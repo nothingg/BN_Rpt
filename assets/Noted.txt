@@ -1,0 +1,19 @@
+Cleansing data Report Bahtnet of BOT
+- Column : instruction_id , พิมพ์ปีผิด เช่น ปัจจุบันปี 2023 แต่ไปกรอก 2022 ( ex. 2023-01-04 )
+    -- วิธีการหา : เอาปีของ filed report date (ที่เอามาใช้ได้เนื่องจากไป sub string มาจาก field cs_ref) มาเทียบกับ ปีของ instruction_id (เอา 4 ตัวท้ายมา ) เทียบกัน , ถ้าไม่ตรง list ออกมา
+    -- ถ้าไม่ทำอาจจะไปซ้ำกับปีก่อนหน้า
+
+์Next Step
+-   dataFram of excel , if instruction_id begin GHB/UPDxxxx set department = งพ.
+-   get data by join tb.reports , tb.excel
+
+
+
+script select
+-   select
+	a.mt , a.ctgypurp, dr_bic, cr_bic, dr_amt, cr_amt, time , debtor_acct ,debtor_name ,creditor_acct ,creditor_name,
+	a.report_date , b.department , b.instruction_id , a.instruction_id
+		from reports a left join excel_no b
+		on a.instruction_id = b.instruction_id
+		where dr_bic = 'GOHUTHB1'and mt = 'p008' and ctgypurp = 'RFT'
+	order by b.row_no
