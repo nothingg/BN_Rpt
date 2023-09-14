@@ -7,6 +7,9 @@ Cleansing data Report Bahtnet of BOT
 -   dataFram of excel , if instruction_id begin GHB/UPDxxxx set department = งพ.
 -   get data by join tb.reports , tb.excel
 
+-   dataFram ขารับ บง : p008 / LGB
+-   dataFram ขารับ งพ : p008 / RFT / 0010007369
+
 
 
 script select
