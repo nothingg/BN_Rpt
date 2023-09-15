@@ -6,17 +6,42 @@ Cleansing data Report Bahtnet of BOT
 ์Next Step
 -   dataFram of excel , if instruction_id begin GHB/UPDxxxx set department = งพ.
 -   get data by join tb.reports , tb.excel
-
 -   dataFram ขารับ บง : p008 / LGB
 -   dataFram ขารับ งพ : p008 / RFT / 0010007369
 
 
 
 script select
--   select
-	a.mt , a.ctgypurp, dr_bic, cr_bic, dr_amt, cr_amt, time , debtor_acct ,debtor_name ,creditor_acct ,creditor_name,
-	a.report_date , b.department , b.instruction_id , a.instruction_id
-		from reports a left join excel_no b
-		on a.instruction_id = b.instruction_id
-		where dr_bic = 'GOHUTHB1'and mt = 'p008' and ctgypurp = 'RFT'
-	order by b.row_no
+select
+	a.mt ,
+	a.ctgypurp,
+	dr_bic,
+	cr_bic,
+	dr_amt,
+	cr_amt,
+	time ,
+	debtor_acct ,
+	debtor_name ,
+	creditor_acct ,
+	creditor_name,
+	a.report_date ,
+	--b.department ,
+	CASE
+        WHEN a.mt = 'p008' AND a.ctgypurp = 'RFT' AND a.instruction_id LIKE 'GHB/UPD%' THEN 'นิติกรรม'
+        WHEN a.mt = 'p008' AND a.ctgypurp = 'LGB' THEN 'บง.'
+        WHEN a.mt = 'p008' AND a.ctgypurp = 'RFT' and upper(a.creditor_name) LIKE '%GOVERNMENT HOUSING%' THEN 'งพ.'
+        WHEN a.mt = 'p008' AND a.ctgypurp = 'RFT' and upper(a.creditor_name) LIKE '%GHB%' THEN 'งพ.'
+        ELSE b.department
+    END AS department ,
+	b.instruction_id as excel_instruc_id ,
+	a.instruction_id
+from
+	reports a
+left join excel_no b on
+	a.instruction_id = b.instruction_id
+--where
+	--dr_bic != 'GOHUTHB1'
+	--and mt = 'p008'
+	--and ctgypurp = 'RFT'
+order by
+	b.row_no

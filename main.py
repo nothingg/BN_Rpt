@@ -117,15 +117,18 @@ if __name__ == "__main__":
   csv_directory = 'assets/csv/'
   excel_directory = 'assets/excel/'
 
-  db_params = "postgresql://gpjaulxp:t33MItntW9YX3h6GD8fePdUu-DgtI6Vh@rain.db.elephantsql.com/gpjaulxp"
+  # db_params = "postgresql://gpjaulxp:t33MItntW9YX3h6GD8fePdUu-DgtI6Vh@rain.db.elephantsql.com/gpjaulxp"
+
+  # Create a connection URL
+  db_params = "postgresql://postgres:password@localhost:5432/postgres"
 
   csv_to_postgresql = CSVToPostgreSQL(csv_directory, db_params)
-  # combined_data = csv_to_postgresql.read_csv_files()
-  # combined_data = csv_to_postgresql.rearrange_csv_data(combined_data)
-  # csv_to_postgresql.insert_into_postgresql(combined_data)
-  #
-  # excel_data = csv_to_postgresql.readexcel()
-  # csv_to_postgresql.insert_data_excel(excel_data)
+  combined_data = csv_to_postgresql.read_csv_files()
+  combined_data = csv_to_postgresql.rearrange_csv_data(combined_data)
+  csv_to_postgresql.insert_into_postgresql(combined_data)
+
+  excel_data = csv_to_postgresql.readexcel()
+  csv_to_postgresql.insert_data_excel(excel_data)
 
   query = "select a.mt , a.ctgypurp, dr_bic, cr_bic, dr_amt, cr_amt, time , debtor_acct ,debtor_name ,creditor_acct ,creditor_name,a.report_date , b.department , b.instruction_id as excel_instruc_id , a.instruction_id from reports a left join excel_no b on a.instruction_id = b.instruction_id where dr_bic = 'GOHUTHB1'and mt = 'p008' and ctgypurp = 'RFT' order by b.row_no"
   df = pd.read_sql_query(query,db_params)
