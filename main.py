@@ -120,7 +120,8 @@ if __name__ == "__main__":
   # db_params = "postgresql://gpjaulxp:t33MItntW9YX3h6GD8fePdUu-DgtI6Vh@rain.db.elephantsql.com/gpjaulxp"
 
   # Create a connection URL
-  db_params = "postgresql://postgres:password@localhost:5432/postgres"
+  # db_params = "postgresql://postgres:password@localhost:5432/postgres"
+  db_params = "sqlite:///E:/my_work_OLD/_Git/Python/BN_Rpt/assets/db/bahtnet.db"
 
   csv_to_postgresql = CSVToPostgreSQL(csv_directory, db_params)
   combined_data = csv_to_postgresql.read_csv_files()
@@ -131,13 +132,14 @@ if __name__ == "__main__":
   csv_to_postgresql.insert_data_excel(excel_data)
 
   query = "select a.mt , a.ctgypurp, dr_bic, cr_bic, dr_amt, cr_amt, time , debtor_acct ,debtor_name ,creditor_acct ,creditor_name,a.report_date , b.department , b.instruction_id as excel_instruc_id , a.instruction_id from reports a left join excel_no b on a.instruction_id = b.instruction_id where dr_bic = 'GOHUTHB1'and mt = 'p008' and ctgypurp = 'RFT' order by b.row_no"
+  # query = " select  a.mt,  a.ctgypurp,  dr_bic,  cr_bic,  dr_amt,  cr_amt from reports a"
   df = pd.read_sql_query(query,db_params)
 
   # Check if 'instraction_id' column matches the pattern 'GHB/UPD%'
-  mask = df['instruction_id'].str.startswith('GHB/UPD')
+  # mask = df['instruction_id'].str.startswith('GHB/UPD')
 
   # Update 'department' where the mask is True
-  df.loc[mask, 'department'] = 'งพ.'
+  # df.loc[mask, 'department'] = 'งพ.'
 
   # Display the updated DataFrame
   print(df)
