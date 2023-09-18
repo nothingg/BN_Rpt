@@ -1,0 +1,9 @@
+-- Sender --
+SELECT cr_bic, SUM(dr_amt) as sum_amt
+FROM reports
+WHERE dr_bic = 'GOHUTHB1'
+	and mt = 'p008'
+	and ctgypurp = 'RFT'
+GROUP BY cr_bic
+ORDER BY sum_amt DESC
+LIMIT 5;

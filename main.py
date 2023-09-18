@@ -121,7 +121,8 @@ if __name__ == "__main__":
 
   # Create a connection URL
   # db_params = "postgresql://postgres:password@localhost:5432/postgres"
-  db_params = "sqlite:///E:/my_work_OLD/_Git/Python/BN_Rpt/assets/db/bahtnet.db"
+  # db_params = "sqlite:///E:/my_work_OLD/_Git/Python/BN_Rpt/assets/db/bahtnet.db"
+  db_params = "sqlite:///D:/_GHB/Python/BN_Rpt/assets/db/bahtnet.db"
 
   csv_to_postgresql = CSVToPostgreSQL(csv_directory, db_params)
   combined_data = csv_to_postgresql.read_csv_files()
