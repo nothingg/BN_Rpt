@@ -3,7 +3,7 @@ Cleansing data Report Bahtnet of BOT
     -- วิธีการหา : เอาปีของ filed report date (ที่เอามาใช้ได้เนื่องจากไป sub string มาจาก field cs_ref) มาเทียบกับ ปีของ instruction_id (เอา 4 ตัวท้ายมา ) เทียบกัน , ถ้าไม่ตรง list ออกมา
     -- ถ้าไม่ทำอาจจะไปซ้ำกับปีก่อนหน้า
 
-์Next Step
+Next Step
 -   dataFram of excel , if instruction_id begin GHB/UPDxxxx set department = งพ.
 -   get data by join tb.reports , tb.excel
 -   dataFram ขารับ บง : p008 / LGB
@@ -45,3 +45,11 @@ left join excel_no b on
 	--and ctgypurp = 'RFT'
 order by
 	b.row_no
+
+Department
+- บช.
+- บิ๊กซีนวนคร
+- พระราม2
+- สุขาภิบาล 1
+- สุขาภิบาล 3
+- ห้าแยกปากเกร็ด
